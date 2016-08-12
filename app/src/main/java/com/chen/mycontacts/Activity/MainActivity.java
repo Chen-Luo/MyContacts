@@ -1,7 +1,5 @@
-package com.chen.mycontacts.Activity;
+package com.chen.mycontacts.activity;
 
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -10,15 +8,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
-
+import com.chen.mycontacts.fragment.ContactsFragment;
+import com.chen.mycontacts.fragment.DialerFragment;
+import com.chen.mycontacts.fragment.MessagesFragment;
 import com.chen.mycontacts.R;
+import com.chen.mycontacts.list.ContactsSearch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,13 +42,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -87,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        private static final int [] FRAGMENG_SELECTION = { R.layout.fragment_contacts };
-
         public PlaceholderFragment() {
         }
 
@@ -96,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {                          //返回一个fragment实例，并且将sectionNumber使用Bundle传入fragment
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static final PlaceholderFragment newInstance(int sectionNumber) {                    //返回一个PlaceholderFragment实例，并且将sectionNumber使用Bundle传入fragment
+            PlaceholderFragment fragment = new PlaceholderFragment();                               //原生实现，如果所有Fragment具有相同布局，只是更新少量数据可以使用
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -107,10 +104,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,                      //绘制时使用fragment中的sectionNumber选择加载fragment
                                  Bundle savedInstanceState) {
-            int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
-            View rootView = inflater.inflate(FRAGMENG_SELECTION[sectionNumber], container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate( R.layout.fragment_main, container, false);
             return rootView;
         }
     }
@@ -121,15 +115,21 @@ public class MainActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        public SectionsPagerAdapter(FragmentManager fm) { super(fm);}
 
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position);
+            switch (position) {
+                case 0:
+                    return new DialerFragment();
+                case 1:
+                    return new ContactsFragment();
+                case 2:
+                    return new MessagesFragment();
+            }
+            return null;
         }
 
         @Override
