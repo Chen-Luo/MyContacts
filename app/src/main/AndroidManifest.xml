@@ -3,6 +3,7 @@
     package="com.chen.mycontacts">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".ContactsApplication"
@@ -27,8 +28,9 @@
             android:label="ContactView"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.APP_CONTACTS" />
+                <action android:name="com.chen.contacts.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.chen.contacts.category.SINGLE_CONTACT" />
             </intent-filter>
         </activity>
     </application>

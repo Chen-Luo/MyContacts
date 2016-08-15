@@ -3,11 +3,9 @@ package com.chen.mycontacts.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.chen.mycontacts.ContactsApplication;
-import com.chen.mycontacts.activity.ContactViewActivity;
 import com.chen.mycontacts.activity.MainActivity;
 import com.chen.mycontacts.R;
 import com.chen.mycontacts.list.ContactsSearch;
 import com.chen.mycontacts.util.PhotoProcess;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,18 +54,22 @@ public class ContactsFragment extends MainActivity.PlaceholderFragment {
         View view =  inflater.inflate(R.layout.fragment_contacts, container, false);
         EditText contactSearch = (EditText) view.findViewById(R.id.contact_search_by_info);
         mContactsLookupKeys = new ContactsSearch().getLookupIdAndName();
-        mLookupKeyAdapter = new ContactLookupKeysAdapter(mContext, R.layout.single_contact,
+        mLookupKeyAdapter = new ContactLookupKeysAdapter(mContext, R.layout.listview_single_contact,
                 mContactsLookupKeys);
         ListView listView = (ListView) view.findViewById(R.id.contacts_list_view);
         listView.setAdapter(mLookupKeyAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Uri lookupUri = mContactsLookupKeys.get(i).getLookupUri();
-                Intent intent = new Intent(ContactsApplication.getContext(), ContactViewActivity.class);
-                //intent.setAction("android.intent.action.VIEW");
-               // intent.addCategory("android.intent.category.APP_CONTACTS");
-                intent.setData(lookupUri);
+                ContactsSearch.ContactsLookupKey contactsLookupKey =
+                        mContactsLookupKeys.get(i);
+                long _id = contactsLookupKey.getId();
+                String lookup = contactsLookupKey.getLookup();
+                Intent intent = new Intent();
+                intent.setAction("com.chen.contacts.action.VIEW");
+                intent.addCategory("com.chen.contacts.category.SINGLE_CONTACT");
+                intent.putExtra("_id", _id);
+                intent.putExtra("lookup", lookup);
                 startActivity(intent);
             }
         });

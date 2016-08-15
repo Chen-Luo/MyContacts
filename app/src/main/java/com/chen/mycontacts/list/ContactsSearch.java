@@ -31,22 +31,22 @@ public class ContactsSearch {
                             ContactsContract.Contacts.LOOKUP_KEY,
                             ContactsContract.Contacts.DISPLAY_NAME,
                             ContactsContract.Contacts.PHOTO_ID,
-                            ContactsContract.Contacts.PHOTO_URI},
-                    null, null, null);
+                            ContactsContract.Contacts.PHOTO_THUMBNAIL_URI},
+                    null, null, ContactsContract.Contacts.SORT_KEY_ALTERNATIVE);
             if (cursor != null && cursor.moveToFirst()) {                                           //注意&&使用
                 long _id;
                 String lookupKey;
                 String displayName;
                 long photoId;
-                String photoUri;
+                String photoThumbnailUri;
                 do {
                     _id = cursor.getLong(0);
                     lookupKey = cursor.getString(1);
                     displayName = cursor.getString(2);
                     photoId = cursor.getLong(3);
-                    photoUri = cursor.getString(4);
+                    photoThumbnailUri = cursor.getString(4);
                     ContactsLookupKey contactsLookupKey =
-                            new ContactsLookupKey(_id, lookupKey, displayName, photoId, photoUri);
+                            new ContactsLookupKey(_id, lookupKey, displayName, photoId, photoThumbnailUri);
                     contactsLookupKeyArrayList.add(contactsLookupKey);
                 } while (cursor.moveToNext());
             }
@@ -65,14 +65,14 @@ public class ContactsSearch {
         private String mLookup;
         private String mDisplayName;
         private long mPhotoId;
-        private String mPhotoUri;
+        private String mPhotoThumbnailUri;
 
         ContactsLookupKey(long id, String lookup, String displayName, long photoId, String photoUri) {
             mId = id;
             mLookup = lookup;
             mDisplayName = displayName;
             mPhotoId = photoId;
-            mPhotoUri = photoUri;
+            mPhotoThumbnailUri = photoUri;
         }
 
         public long getId() { return mId; }
@@ -83,7 +83,7 @@ public class ContactsSearch {
 
         public boolean hasPhoto() { return ( mPhotoId > 0); }
 
-        public Uri getPhotoUri() { return hasPhoto() ? Uri.parse(mPhotoUri) : null;}
+        public Uri getPhotoUri() { return hasPhoto() ? Uri.parse(mPhotoThumbnailUri) : null;}
 
         public Uri getLookupUri() {
             return ContactsContract.Contacts.getLookupUri(mId, mLookup);

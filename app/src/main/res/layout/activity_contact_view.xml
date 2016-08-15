@@ -8,10 +8,31 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.chen.mycontacts.activity.ContactViewActivity">
-
-    <TextView
-        android:id="@+id/test"
-        android:textSize="10sp"
+    <RelativeLayout
+        android:id="@+id/contact_view_image_and_name"
+        android:layout_alignParentStart="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/contact_view_image"
+            android:layout_centerHorizontal="true"
+            android:layout_width="120dp"
+            android:layout_height="120dp" />
+        <TextView
+            android:id="@+id/contact_view_display_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/contact_view_image"
+            android:paddingTop="10dp"
+            android:textSize="20sp"
+            />
+    </RelativeLayout>
+    <ListView
+        android:id="@+id/contact_info_list_view"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/contact_view_image_and_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
 </RelativeLayout>
