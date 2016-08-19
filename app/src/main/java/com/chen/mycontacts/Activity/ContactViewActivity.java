@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import com.chen.mycontacts.R;
 import com.chen.mycontacts.util.Exchange;
 import com.chen.mycontacts.util.PhotoProcess;
+import com.chen.mycontacts.util.SeveralUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +57,7 @@ public class ContactViewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_view);
         Intent intent = getIntent();
@@ -69,6 +72,7 @@ public class ContactViewActivity extends AppCompatActivity {
         } else {
             Log.e(TAG, "no contact has this id");
         }
+        Log.d(TAG, getIntent().getComponent().getClassName());
     }
 
     private void getInfoForContact(Uri lookupUri) {
@@ -95,8 +99,10 @@ public class ContactViewActivity extends AppCompatActivity {
                     if(phoneCursor.moveToFirst()) {
                         mPhoneNumbers = new ArrayList<String>();
                         do {
-                            String phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                            contactElements.add(new ListSingleElement(phoneNumber, "中国移动", TYPE_PHONE_NUMBER));
+                            String phoneNumber = phoneCursor.getString(
+                                    phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                            contactElements.add(new ListSingleElement(phoneNumber,
+                                    SeveralUtil.getInfoFromPhoneNumber(phoneNumber), TYPE_PHONE_NUMBER));
                             mPhoneNumbers.add(phoneNumber);
                         } while (phoneCursor.moveToNext());
                     }

@@ -23,15 +23,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.ContactViewActivity"
             android:label="ContactView"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.chen.contacts.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="com.chen.contacts.category.SINGLE_CONTACT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.EditContactActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.chen.contacts.action.EDIT" />
+                <category android:name="com.chen.contacts.category.NEW_CONTACT" />
+                <category android:name="com.chen.contacts.category.EDTI_CONTACT" />
             </intent-filter>
         </activity>
     </application>

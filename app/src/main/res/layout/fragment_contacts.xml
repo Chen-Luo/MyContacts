@@ -5,20 +5,39 @@
     tools:context="com.chen.mycontacts.fragment.ContactsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fitsSystemWindows="true"
+        >
         <EditText
             android:id="@+id/contact_search_by_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:hint="搜索联系人"/>
+        <RelativeLayout
+            android:id="@+id/edit_and_menu_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            >
+            <Button
+                android:id="@+id/add_new_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Add"/>
+        </RelativeLayout>
         <ListView
             android:id="@+id/contacts_list_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@id/contact_search_by_info"
+            android:layout_above="@id/edit_and_menu_bottom"
+            >
         </ListView>
-    </LinearLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>

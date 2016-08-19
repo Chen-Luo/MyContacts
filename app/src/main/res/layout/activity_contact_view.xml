@@ -32,6 +32,7 @@
         android:id="@+id/contact_info_list_view"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/contact_view_image_and_name"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>
